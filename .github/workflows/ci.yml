@@ -14,10 +14,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Install dependencies
-        run: |
-          pip install ruff mypy
-          pip install -r requirements.txt 2>/dev/null || true
+      - name: Install linting tools
+        run: pip install ruff mypy
       - name: Lint with ruff
         run: ruff check backend/
       - name: Type check with mypy
@@ -35,11 +33,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install system deps
         run: sudo apt-get update && sudo apt-get install -y libxml2-dev libxslt-dev
-      - name: Install dependencies
+      - name: Install test deps
         run: |
           pip install -U pip
-          pip install pytest pytest-cov
-          pip install pymupdf pdfplumber python-docx beautifulsoup4 chardet langdetect trafilatura lxml structlog
+          pip install pymupdf pdfplumber python-docx beautifulsoup4 \
+            chardet langdetect trafilatura lxml structlog \
+            fastapi uvicorn jinja2 python-multipart httpx \
+            pytest pytest-cov
       - name: Run tests with coverage
         run: |
           pytest backend/tests/ \
@@ -60,8 +60,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Install dependencies
+      - name: Install deps
         run: |
-          pip install pymupdf pdfplumber python-docx beautifulsoup4 chardet langdetect trafilatura lxml structlog
+          pip install pymupdf pdfplumber python-docx beautifulsoup4 \
+            chardet langdetect trafilatura lxml structlog
       - name: Run benchmarks
         run: python backend/benchmarks/benchmark_pipeline.py --iterations 3
