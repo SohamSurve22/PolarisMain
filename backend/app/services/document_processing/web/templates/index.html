@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polaris Parser Tester</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Polaris Parser Tester</h1>
+      <span class="subtitle">Internal developer tool — validates parser output</span>
+    </header>
+
+    <div class="pane-container">
+      <!-- Input Pane -->
+      <div class="pane input-pane">
+        <h2>Input</h2>
+
+        <form id="parse-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="text">Paste legal text</label>
+            <textarea id="text" name="text" rows="18" placeholder="Paste legal document text here, or upload a file below..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="file">Upload document</label>
+            <input type="file" id="file" name="file" accept=".txt,.pdf,.docx,.html,.htm">
+            <div class="file-hint">Supported: .txt .pdf .docx .html</div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" id="parse-btn" class="btn-primary">Parse Document</button>
+            <button type="button" id="clear-btn" class="btn-secondary">Clear</button>
+          </div>
+        </form>
+
+        <div id="error-box" class="error-box hidden"></div>
+      </div>
+
+      <!-- Output Pane -->
+      <div class="pane output-pane">
+        <h2>Output</h2>
+
+        <div id="metadata-panel" class="metadata-panel hidden">
+          <h3>Metadata</h3>
+          <table class="metadata-table">
+            <tr><td>Status</td><td id="m-status"></td></tr>
+            <tr><td>File</td><td id="m-filename"></td></tr>
+            <tr><td>Format</td><td id="m-format"></td></tr>
+            <tr><td>Language</td><td id="m-language"></td></tr>
+            <tr><td>Words</td><td id="m-words"></td></tr>
+            <tr><td>Characters</td><td id="m-chars"></td></tr>
+            <tr><td>Pages</td><td id="m-pages"></td></tr>
+            <tr><td>Sections</td><td id="m-sections"></td></tr>
+            <tr><td>Clauses</td><td id="m-clauses"></td></tr>
+            <tr><td>Processing time</td><td id="m-time"></td></tr>
+          </table>
+
+          <h3>Section Hierarchy <span id="section-count-badge" class="badge"></span></h3>
+          <div id="hierarchy" class="hierarchy"></div>
+        </div>
+
+        <div id="json-panel" class="json-panel hidden">
+          <div class="json-header">
+            <h3>Canonical Intermediate Representation</h3>
+            <button id="download-btn" class="btn-small">Download JSON</button>
+          </div>
+          <pre><code id="json-output" class="language-json"></code></pre>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <p>Paste text or upload a document, then click <strong>Parse Document</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

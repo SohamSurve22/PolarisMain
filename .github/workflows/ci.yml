@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: |
+          pip install ruff mypy
+          pip install -r requirements.txt 2>/dev/null || true
+      - name: Lint with ruff
+        run: ruff check backend/
+      - name: Type check with mypy
+        run: mypy backend/ --ignore-missing-imports || true
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libxslt-dev
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install pytest pytest-cov
+          pip install pymupdf pdfplumber python-docx beautifulsoup4 chardet langdetect trafilatura lxml structlog
+      - name: Run tests with coverage
+        run: |
+          pytest backend/tests/ \
+            --cov=backend/app/services/document_processing \
+            --cov-report=xml \
+            --cov-report=term-missing \
+            -v
+      - name: Upload coverage
+        uses: codecov/codecov-action@v5
+        with:
+          file: ./coverage.xml
+
+  benchmark:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: |
+          pip install pymupdf pdfplumber python-docx beautifulsoup4 chardet langdetect trafilatura lxml structlog
+      - name: Run benchmarks
+        run: python backend/benchmarks/benchmark_pipeline.py --iterations 3

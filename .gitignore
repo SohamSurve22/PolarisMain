@@ -1,0 +1,39 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+.env/
+
+# Cache directories
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.eggs/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Runtime artifacts
+*.log
+stderr_web.txt
+stdout_web.txt
+web_err.txt
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

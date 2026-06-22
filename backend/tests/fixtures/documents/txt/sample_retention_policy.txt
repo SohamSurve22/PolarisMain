@@ -1,0 +1,18 @@
+Data Retention Policy
+====================
+
+Effective Date: January 1, 2024
+
+1. Purpose
+This Data Retention Policy outlines the periods for which we retain personal data.
+
+2. Retention Periods
+  (a) Account data: Retained for the duration of the account plus 3 years
+  (b) Transaction data: Retained for 7 years as required by law
+  (c) Log data: Retained for 12 months
+
+3. Data Deletion
+Upon expiry of the retention period, data is securely deleted.
+
+4. Compliance
+This policy complies with the IT Act 2000 and SPDI Rules 2011.

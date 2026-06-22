@@ -1,0 +1,7 @@
+include = backend/
+exclude = .git, __pycache__, *.pyc, .pytest_cache, .eggs, *.egg-info, .ruff_cache
+
+select = E, F, I, N, W, UP
+ignore = E501
+line-length = 100
+target-version = py313
